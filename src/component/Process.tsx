@@ -1,73 +1,117 @@
-import React, {  } from 'react';
-import { WidthProvider } from "react-grid-layout";
-import ReactGridLayout from "react-grid-layout";
-
-import "../App.css"
 import {
   Box,
   Container,
-  Text,
-  Flex,
-  Card,
-  Avatar,
-  CardHeader,
-  Heading,
-  Center,
   chakra,
   useColorModeValue,
-  Step,
-  StepIcon,
-  StepIndicator,
-  StepStatus,
-  Stepper,
-  StepSeparator
+  HStack,
+  Text,
+  Icon,
+  Spacer,
+  Center,
+  VStack,
+  Card,
+  color,
+  Button
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { truncate } from 'fs';
+import { IconType } from 'react-icons';
+import { MdFlashOn, MdOutlineMessage } from 'react-icons/md';
+import { TbPackage, TbBarcode, TbDatabase } from 'react-icons/tb';
 
-import {points} from '../resources/points'
+const points:PointProps[] = [
+  {
+    title: 'A',
+    icon: MdFlashOn,
+    description: "Desc A",
+  },
+  {
+    title: 'B',
+    icon: TbPackage,
+    description: "Desc B" ,
+  },
+  {
+    title: 'C',
+    icon: TbBarcode,
+    description: "Desc C" ,
+  },
+  {
+    title: 'D',
+    icon: MdOutlineMessage,
+    description: "Desc D" ,
+  },
+  {
+    title: 'E',
+    icon: TbDatabase,
+    description: "Desc E" ,
+  },
+];
 
-const GridLayout = WidthProvider(ReactGridLayout);
+interface PointProps {
+  title: string;
+  description: string;
+  icon: IconType;
+}
 
 export default function Index(){
-
-
+  const borderColor = useColorModeValue('gray.400','gray.500');
+  const pointColor = useColorModeValue('cyan.400','cyan.500');
+  const widthPx = 200;
   return (
-    <Box
-      maxW="full"
-      justifyContent={"center"}
-      overflow="hidden">
-      <Stepper size='xs' index={2}>
-        {points.map((point,index)=>{
-          return (
-            <Step key={index}>
-              <StepIndicator mr={0}>
-                <StepStatus complete={<StepIcon />} />
-              </StepIndicator>
-              <StepSeparator/>
-            </Step>
-          )
-          })
-        }
-      </Stepper>
-    </Box>
-  );
-};
-const LineWithDot = () => {
-  const borderColor = useColorModeValue('gray.200', 'gray.700');
-  return (
-    <Flex w={10} h={10} _before={{
-      content: `""`,
-        w: '0',
-        h: '0',
-        borderStyle: 'solid',
-        borderWidth: '15px 15px 15px 0',
-        position: 'absolute',
-        left: '-15px',
-        display: 'block'
-    }}>  
-    </Flex>
+    <Container maxW="xl" centerContent>
+      <HStack spacing={8} position="relative">
+        {points.map((point,index) =>(
+          <VStack pt={8} width={widthPx + "px"}>
+            <motion.div
+              whileHover={{ scale: 1.2,color:borderColor}}
+              whileTap={{ scale: 0.8 }}
+            >
+              <VStack cursor={"pointer"} >
+                <Text fontSize="md" color={pointColor}>{point.title}</Text>
+                <Icon
+                  as={point.icon}
+                  boxSize={8}
+                  color={pointColor}
+                />
+              </VStack>
+            </motion.div>
+            <DotLine/>
+          </VStack>
+        ))}
+        <Center
+          position="absolute"
+          bottom="4px"
+          width="100%"
+          border="1px dashed"
+          borderColor={borderColor}
+        />
+      </HStack>
+    </Container>
   );
 };
 
-function useSteps(arg0: { index: number; count: any; }): { activeStep: any; setActiveStep: any; } {
-  throw new Error('Function not implemented.');
-}
+const DotLine = () =>{
+  const borderColor = useColorModeValue('gray.400','gray.500');
+  return (
+    <>
+      <chakra.span
+        left="50%"
+        top="0px"
+        bottom="0px"
+        height="20px"
+        border="1px dashed"
+        borderColor={borderColor}
+      />      
+      <Center
+        width="12px"
+        height="12px"
+        backgroundSize="cover"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="center center"
+        bg={borderColor}
+        borderRadius="10px"
+        backgroundImage="none"
+        opacity={1}/>
+    </>
+  )
+};
