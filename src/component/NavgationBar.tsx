@@ -5,7 +5,6 @@ import {
   TabList,
   Tabs,
   MenuButton,
-  Flex,
   IconButton,
   Menu,
   MenuList,
@@ -13,7 +12,6 @@ import {
   Avatar,
   MenuDivider,
   useColorMode,
-  Box,
   Spacer,
   HStack,
   Divider
@@ -60,7 +58,7 @@ const NavigationBar = ()=>{
         <TabList>
           {LinkItems.map((link) => (
             <Tab as={NavLink} to={link.to} >
-            <Icon
+              <Icon
                 mr="1"
                 boxSize="4"
                 as={link.icon}
