@@ -2,7 +2,7 @@ import { Alert, AlertIcon, Box, Card, Container, HStack} from "@chakra-ui/react"
 import React from "react";
 
 import ReactGridLayout,{ WidthProvider } from "react-grid-layout";
-import "../resources/layoutStyles.css"
+import "../theme/layoutStyles.css"
 const GridLayout = WidthProvider(ReactGridLayout);
 
 export default function Index(){
