@@ -54,7 +54,7 @@ const NavigationBar = ()=>{
     <HStack px={4} py={2}>
       <Avatar icon={<TbUser />} size="sm" fontSize={20} cursor="pointer" />
       <Spacer/>
-      <Tabs as="nav" align="center" variant="soft-rounded" colorScheme="cyan">
+      <Tabs as="nav" align="center" variant='solid-rounded' colorScheme="cyan">
         <TabList>
           {LinkItems.map((link) => (
             <Tab as={NavLink} to={link.to} >

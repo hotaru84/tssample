@@ -11,39 +11,68 @@ import {
   VStack,
   Card,
   color,
-  Button
+  Button,
+  Divider,
+  Grid,
+  GridItem,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { truncate } from 'fs';
 import { IconType } from 'react-icons';
 import { MdFlashOn, MdOutlineMessage } from 'react-icons/md';
-import { TbPackage, TbBarcode, TbDatabase } from 'react-icons/tb';
+import { TbPackage, TbBarcode, TbDatabase, TbPackageImport, TbPackageExport, TbArrowBearRight, TbArrowFork } from 'react-icons/tb';
 
+const MirroredTbPackageImport = ({...props}) =>{
+  return (
+    <TbPackageImport {...props} style={{transform:'scaleX(-1)'}}/>
+  )
+};
+const RotatedTbArrowFork =({...props}) =>{
+  return(
+    <TbArrowFork {...props} style={{transform:'rotate(90deg)'}} />
+  )
+}
 const points:PointProps[] = [
   {
     title: 'A',
-    icon: MdFlashOn,
+    icon: MirroredTbPackageImport,
     description: "Desc A",
+    width:0
   },
   {
     title: 'B',
     icon: TbPackage,
     description: "Desc B" ,
+    width:100
   },
   {
     title: 'C',
     icon: TbBarcode,
     description: "Desc C" ,
+    width:60
   },
   {
     title: 'D',
     icon: MdOutlineMessage,
     description: "Desc D" ,
+    width:30
+  },
+  {
+    title: 'D',
+    icon: RotatedTbArrowFork,
+    description: "Desc D" ,
+    width:400
   },
   {
     title: 'E',
-    icon: TbDatabase,
+    icon: TbPackageExport,
     description: "Desc E" ,
+    width:0
   },
 ];
 
@@ -51,46 +80,57 @@ interface PointProps {
   title: string;
   description: string;
   icon: IconType;
+  width:number;
 }
 
 export default function Index(){
   const borderColor = useColorModeValue('gray.400','gray.500');
   const pointColor = useColorModeValue('cyan.400','cyan.500');
-  const widthPx = 200;
+  const widthPx = 64;
+  const dotSize = 14;
+  const totalWidth = points.reduce((ttl,p)=>(p.width + ttl),0)
   return (
-    <Container maxW="xl" centerContent>
-      <HStack spacing={8} position="relative">
+    <>
+      <Tabs position={"relative"} align='center' variant='unstyled'>
+        <TabList>
+          {points.map((point,index) =>(
+            <Tab as={VStack} width={point.width + 'px'} _selected={{color:pointColor}}  color={borderColor}>
+              <motion.div whileHover={{scale:1.1}}>
+                <VStack cursor={"pointer"} width={widthPx + "px"}>
+                  <Text fontSize="md">{point.title}</Text>
+                  <Icon
+                    as={point.icon}
+                    boxSize={8}
+                  />
+                </VStack>
+              </motion.div>
+              <DotLine/>
+            </Tab>
+          ))}
+          <Center
+            position="absolute"
+            bottom="76px"
+            width={totalWidth + 'px'}
+            border="1px dashed"
+            borderColor={borderColor}
+          />
+        </TabList>
+
+        <TabPanels>
         {points.map((point,index) =>(
-          <VStack pt={8} width={widthPx + "px"}>
-            <motion.div
-              whileHover={{ scale: 1.2,color:borderColor}}
-              whileTap={{ scale: 0.8 }}
-            >
-              <VStack cursor={"pointer"} >
-                <Text fontSize="md" color={pointColor}>{point.title}</Text>
-                <Icon
-                  as={point.icon}
-                  boxSize={8}
-                  color={pointColor}
-                />
-              </VStack>
-            </motion.div>
-            <DotLine/>
-          </VStack>
+          <TabPanel>
+            <Text>{point.description}</Text>
+          </TabPanel>
         ))}
-        <Center
-          position="absolute"
-          bottom="4px"
-          width="100%"
-          border="1px dashed"
-          borderColor={borderColor}
-        />
-      </HStack>
-    </Container>
+        </TabPanels>
+      </Tabs>
+    </>
   );
 };
 
+
 const DotLine = () =>{
+  const dotSize = 14;
   const borderColor = useColorModeValue('gray.400','gray.500');
   return (
     <>
@@ -103,8 +143,8 @@ const DotLine = () =>{
         borderColor={borderColor}
       />      
       <Center
-        width="12px"
-        height="12px"
+        width={dotSize+'px'}
+        height={dotSize+'px'}
         backgroundSize="cover"
         backgroundRepeat="no-repeat"
         backgroundPosition="center center"
