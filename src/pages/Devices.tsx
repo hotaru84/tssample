@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Box, Card, Container, HStack} from "@chakra-ui/react";
+import { Card, Container} from "@chakra-ui/react";
 import React from "react";
 
 import ReactGridLayout,{ WidthProvider } from "react-grid-layout";

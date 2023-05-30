@@ -1,9 +1,9 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import {theme} from './theme'
-import NavgationBar from "./component/NavgationBar";
-import Process from "./component/Process";
+import NavgationBar from "./pages/NavgationBar";
+import Process from "./pages/Process";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Devices from "./component/Devices";
+import Devices from "./pages/Devices";
 
 function App() {
   return (
