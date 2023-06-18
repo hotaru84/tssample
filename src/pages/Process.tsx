@@ -1,70 +1,59 @@
 import {
   chakra,
   useColorModeValue,
-  Text,
   Icon,
   Center,
-  VStack,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
-  Tabs,
-  AvatarBadge
-} from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+  Tabs} from '@chakra-ui/react';
 import { IconType } from 'react-icons';
-import { MdOutlineMessage } from 'react-icons/md';
-import { TbPackage, TbBarcode, TbPackageImport, TbPackageExport, TbArrowFork } from 'react-icons/tb';
+import { TbPackageImport, TbPackageExport, TbArrowFork, TbDatabase, TbMapPin, TbMessageForward, TbRoute } from 'react-icons/tb';
 
-import Tables from '../component/Tables'
+import FormA from '../component/FormA';
+import React, {  } from 'react';
 
-const MirroredTbPackageImport = ({...props}) =>{
+const MirroredTbPackageImport = ({ ...props }) => {
   return (
-    <TbPackageImport {...props} style={{transform:'scaleX(-1)'}}/>
+    <TbPackageImport {...props} style={{ transform: 'scaleX(-1)' }} />
   )
 };
-const RotatedTbArrowFork =({...props}) =>{
-  return(
-    <TbArrowFork {...props} style={{transform:'rotate(90deg)'}} />
+const RotatedTbArrowFork = ({ ...props }) => {
+  return (
+    <TbArrowFork {...props} style={{ transform: 'rotate(90deg)' }} />
   )
 }
-const points:PointProps[] = [
+const points: PointProps[] = [
   {
     title: 'A',
-    icon: MirroredTbPackageImport,
+    icon: TbMessageForward,
     description: "Desc A",
-    width:0
   },
   {
-    title: 'B',
-    icon: TbPackage,
-    description: "Desc B" ,
-    width:100
+    title: 'b',
+    icon: MirroredTbPackageImport,
+    description: "Desc B",
   },
   {
-    title: 'C',
-    icon: TbBarcode,
-    description: "Desc C" ,
-    width:60
+    title: 'c',
+    icon: TbMapPin,
+    description: "Desc C",
   },
   {
-    title: 'D',
-    icon: MdOutlineMessage,
-    description: "Desc D" ,
-    width:30
+    title: 'd',
+    icon: TbDatabase,
+    description: "Desc D",
   },
   {
-    title: 'D',
+    title: 'e',
     icon: RotatedTbArrowFork,
-    description: "Desc D" ,
-    width:400
+    description: "Desc D",
   },
   {
-    title: 'E',
+    title: 'f',
     icon: TbPackageExport,
-    description: "Desc E" ,
-    width:0
+    description: "Desc E",
   },
 ];
 
@@ -72,54 +61,59 @@ interface PointProps {
   title: string;
   description: string;
   icon: IconType;
-  width:number;
 }
 
-export default function Index(){
-  const borderColor = useColorModeValue('gray.400','gray.500');
-  const pointColor = useColorModeValue('cyan.400','cyan.500');
-  const widthPx = 64;
-  const totalWidth = points.reduce((ttl,p)=>(p.width + ttl),0)
+export default function Index() {
+  const borderColor = useColorModeValue('gray.400', 'gray.500');
+  const bgColor = useColorModeValue('gray.200', 'gray.700');
+  const pointColor = useColorModeValue('cyan.400', 'cyan.500');
   return (
-    <Tabs position={"relative"} align='center' variant='unstyled'>
-      <TabList>
-        {points.map((point) =>(
-          <Tab as={VStack} width={point.width + 'px'} _selected={{color:pointColor}}  color={borderColor}>
-            <motion.div whileHover={{scale:1.1}}>
-              <VStack cursor={"pointer"} width={widthPx + "px"}>
-                <Text fontSize="md">{point.title}</Text>
-                <Icon
-                  as={point.icon}
-                  boxSize={8}
-                />
-              </VStack>
-            </motion.div>
-            <DotLine/>
-          </Tab>
-        ))}
-        <Center
-          position="absolute"
-          top="116px"
-          width={totalWidth + 'px'}
-          border="1px dashed"
-          borderColor={borderColor}
-        />
-      </TabList>
-
-      <TabPanels>
-        {points.map((point,index) =>(
-          <TabPanel>
-            <Tables />
-          </TabPanel>
-        ))}
-      </TabPanels>
-    </Tabs>
+    <Center>
+      <Tabs colorScheme="cyan" variant="unstyled" isFitted mt={2}>
+        <TabList>
+          {points.map((point) => (
+            <Tab _selected={{color:pointColor}}  color={borderColor}>
+              <Icon
+                mr="2"
+                boxSize="6"
+                as={point.icon}
+              />
+              {point.title}
+            </Tab>
+          ))}
+        </TabList>
+        <TabPanels>
+          {points.map((point) => (
+            <TabPanel>
+              <FormA />
+            </TabPanel>            
+          ))}
+        </TabPanels>
+      </Tabs>
+      <Icon
+        cursor="pointer"
+        position="fixed"
+        right={6}
+        bottom={6}
+        as={TbRoute}
+        bgColor={bgColor}
+        color={pointColor}
+        w={14}
+        h={14}
+        rounded="full"
+        p={3}
+        boxShadow="md"
+        _hover={{
+          bgColor:borderColor
+        }}
+      />
+    </Center>
   );
 };
 
-const DotLine = () =>{
+const DotLine = () => {
   const dotSize = 14;
-  const borderColor = useColorModeValue('gray.400','gray.500');
+  const borderColor = useColorModeValue('gray.400', 'gray.500');
   return (
     <>
       <chakra.span
@@ -129,17 +123,17 @@ const DotLine = () =>{
         height="20px"
         border="1px dashed"
         borderColor={borderColor}
-      />      
+      />
       <Center
-        width={dotSize+'px'}
-        height={dotSize+'px'}
+        width={dotSize + 'px'}
+        height={dotSize + 'px'}
         backgroundSize="cover"
         backgroundRepeat="no-repeat"
         backgroundPosition="center center"
         bg={borderColor}
         borderRadius="10px"
         backgroundImage="none"
-        opacity={1}/>
+        opacity={1} />
     </>
   )
 };

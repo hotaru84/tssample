@@ -5,8 +5,6 @@ import ReactGridLayout,{ WidthProvider } from "react-grid-layout";
 import "../theme/layoutStyles.css"
 const GridLayout = WidthProvider(ReactGridLayout);
 
-
-
 export default function Index(){
   const cardWidth = 3;
 
