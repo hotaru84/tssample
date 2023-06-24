@@ -9,13 +9,18 @@ import {
   Collapse,
   Flex,
   useBoolean,
-  Container} from '@chakra-ui/react';
+  Container,
+  Slide,
+  SlideFade,
+  Fade,
+  VStack} from '@chakra-ui/react';
 import { TbEdit, TbRoute } from 'react-icons/tb';
 
 import { ConfigForm } from '../component/ConfigForm';
 import React, { useState } from 'react';
 import { points } from '../resources/points';
 import { MonitorView } from '../component/MonitorView';
+import { motion } from 'framer-motion';
 
 export default function Index() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -50,12 +55,10 @@ export default function Index() {
         </TabList>
         <Collapse in={!isMonitor} animateOpacity>
           <TabPanels>
-            {points.map((point,index) => (
-              <Collapse in={tabIndex === index} animateOpacity>
-                <TabPanel>
-                  <ConfigForm props={point.formProps} />
-                </TabPanel>
-              </Collapse>
+            {points.map((point) => (
+              <TabPanel key={`tab-${point.title}`}>
+                <ConfigForm props={point.formProps} />
+              </TabPanel>
             ))}
           </TabPanels>
         </Collapse>

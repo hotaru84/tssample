@@ -9,7 +9,7 @@ export default function Index(){
   const cardWidth = 3;
 
   return (
-    <Container maxW="4xl">
+    <Container>
       <GridLayout
         className="layout"
         cols={12}
