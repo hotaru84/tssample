@@ -30,9 +30,6 @@ export default function Index() {
   const pointColor = useColorModeValue('cyan.400', 'cyan.500');
   return (
     <Container>
-      <Collapse in={isMonitor} animateOpacity>
-        <MonitorView/>
-      </Collapse>
       <Tabs 
         colorScheme="cyan"
         variant="unstyled"
@@ -63,24 +60,6 @@ export default function Index() {
           </TabPanels>
         </Collapse>
       </Tabs>
-      <Icon
-        cursor="pointer"
-        position="fixed"
-        right={6}
-        bottom={6}
-        as={isMonitor?TbEdit:TbRoute}
-        bgColor={bgColor}
-        color={pointColor}
-        w={14}
-        h={14}
-        rounded="full"
-        p={3}
-        boxShadow="md"
-        _hover={{
-          bgColor:borderColor
-        }}
-        onClick={monitor.toggle}
-      />
     </Container>
   );
 };
