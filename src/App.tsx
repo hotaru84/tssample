@@ -4,6 +4,7 @@ import Main from "./pages/Main";
 import Process from "./pages/Process";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Devices from "./pages/Devices";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Main />}>
             <Route path="/" element={<Devices />} />
             <Route path="/devices" element={<Devices />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/process" element={<Process />} />
             <Route path="*" element={<Devices/>}/>
           </Route>

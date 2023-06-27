@@ -17,7 +17,7 @@ export const NavMenuItem = ({name,icon,to,...rest}: LinkItemProps) => {
   const textColor = useColorModeValue('gray.700', 'gray.200');
   const hoverFilter = useColorModeValue('brightness(90%)', 'brightness(150%)');
   return (
-    <NavLink to={to} style={{ textDecoration: 'none' }} role='group' key={name} {...rest}>
+    <NavLink to={to} style={{ textDecoration: 'none' }} role='group' {...rest}>
       {({ isActive }) => (  
         <VStack color={textColor} py={2} spacing={0}>
           <Icon

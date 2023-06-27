@@ -14,11 +14,20 @@ import {
   Text,
   Heading,
   Button,
-  VStack
+  VStack,
+  Box,
+  Stack,
+  StackDivider,
+  transition,
+  IconButtonProps
 } from '@chakra-ui/react';
 import { CgDarkMode } from 'react-icons/cg';
-import { TbMenu2, TbPlus, TbRoute, TbSettings, TbSitemap, TbUser } from 'react-icons/tb';
+import { TbEdit, TbMenu2, TbPlus, TbRoute, TbSettings, TbSitemap, TbUser } from 'react-icons/tb';
+import {MdSave} from 'react-icons/md'
 import { LinkItemProps, NavMenuItem } from './NavMenuItem';
+import { Location,useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { motion,useAnimation, useAnimationControls } from 'framer-motion';
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Devices', icon: TbSitemap, to:"/devices" },
@@ -27,6 +36,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export const NavigationRail = () => {
+  const [ fabicon, setFabicon ] = useState<React.ReactElement>((<MdSave/>))
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen,onOpen,onClose } = useDisclosure();
 
@@ -34,6 +44,21 @@ export const NavigationRail = () => {
   const bgColor = useColorModeValue('gray.50', 'gray.900');
 
   const hoverFilter = useColorModeValue('brightness(90%)', 'brightness(150%)');
+  const controls = useAnimationControls();
+  const location = useLocation();
+  useEffect(()=>{
+    controls.start({scale:[1,0.7,1],originY:0.25},{duration:0.25,ease:'easeIn'}).then(()=>{
+      switch(location.pathname) {
+        case '/settings':
+          return setFabicon(<MdSave/>);
+        case '/devices':
+          return setFabicon(<TbPlus/>);
+        case '/process':
+          return setFabicon(<TbEdit/>);
+      }
+    });
+  },[location]);
+
   return (
     <>
     <Flex
@@ -60,21 +85,25 @@ export const NavigationRail = () => {
         px={4}
         mb='12px'
       />
-      <IconButton
-        aria-label='action'
-        cursor="pointer"
-        fontSize={24}
-        size={"lg"}
-        icon={<TbPlus />}
-        bgColor={pointColor}
-        _hover={{ filter: hoverFilter }}
-        rounded="xl"
-        p={4}
-        mb='56px'
-      />
-      
-      {LinkItems.map((link) => (
-        <NavMenuItem {...link} style={{marginBottom:2}}/>
+      <motion.div animate={controls} whileTap={{scale:1.1}}>
+        <IconButton
+          aria-label='action'
+          cursor="pointer"
+          fontSize={24}
+          size={"lg"}
+          icon={fabicon}
+          bgColor={pointColor}
+          _hover={{ filter: hoverFilter }}
+          boxShadow='sm'
+          rounded="xl"
+          p={4}
+          mb='56px'
+        />
+      </motion.div>
+      {LinkItems.map((link,i) => (
+        <motion.div whileHover={{scale:1.1}}>
+          <NavMenuItem {...link} style={{marginBottom:2}} key={i} />
+        </motion.div>
       ))}
       <Spacer />
     </Flex>
@@ -88,17 +117,17 @@ export const NavigationRail = () => {
       <DrawerOverlay />
       <DrawerContent w="100px">
         <DrawerCloseButton />
-        <DrawerHeader>
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-          <Avatar icon={<TbUser fontSize={24}/>} boxSize={8}/>
-          <Heading size='sm'>Admin</Heading>
-          </Flex>
+        <DrawerHeader >
+          More..
         </DrawerHeader>
-        <VStack>
-          <Button leftIcon={<CgDarkMode />} variant='ghost' onClick={toggleColorMode}>
+        <Stack spacing='2' mx={2} align={"start"}>
+          <Button leftIcon={<TbUser />} variant='ghost' width={'full'}>
+            Account
+          </Button>
+          <Button leftIcon={<CgDarkMode />} variant='ghost' width='full' onClick={toggleColorMode}>
             Color Mode
           </Button>
-        </VStack>
+        </Stack>
       </DrawerContent>
     </Drawer>
     </>
