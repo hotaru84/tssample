@@ -5,29 +5,22 @@ import {
   useColorModeValue,
   useDisclosure,
   Flex,
-  Drawer,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
-  DrawerHeader,
   Avatar,
   Text,
   Heading,
-  Button,
   VStack,
   Box,
-  Stack,
   StackDivider,
   transition,
   IconButtonProps
 } from '@chakra-ui/react';
-import { CgDarkMode } from 'react-icons/cg';
-import { TbEdit, TbMenu2, TbPlus, TbRoute, TbSettings, TbSitemap, TbUser } from 'react-icons/tb';
+import { TbEdit, TbMenu2, TbPlus, TbRoute, TbSettings, TbSitemap } from 'react-icons/tb';
 import {MdSave} from 'react-icons/md'
 import { LinkItemProps, NavMenuItem } from './NavMenuItem';
 import { Location,useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion,useAnimation, useAnimationControls } from 'framer-motion';
+import { DetailDrawer } from './DetailDrawer';
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Devices', icon: TbSitemap, to:"/devices" },
@@ -36,8 +29,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export const NavigationRail = () => {
-  const [ fabicon, setFabicon ] = useState<React.ReactElement>((<MdSave/>))
-  const { colorMode, toggleColorMode } = useColorMode();
+  const [ fabicon, setFabicon ] = useState<React.ReactElement>((<MdSave/>));
   const { isOpen,onOpen,onClose } = useDisclosure();
 
   const pointColor = useColorModeValue('cyan.200', 'cyan.600');
@@ -47,7 +39,7 @@ export const NavigationRail = () => {
   const controls = useAnimationControls();
   const location = useLocation();
   useEffect(()=>{
-    controls.start({scale:[1,0.7,1],originY:0.25},{duration:0.25,ease:'easeIn'}).then(()=>{
+    controls.start({scale:[1,0,1],originY:0.25},{duration:0.25,ease:'easeIn'}).then(()=>{
       switch(location.pathname) {
         case '/settings':
           return setFabicon(<MdSave/>);
@@ -107,29 +99,8 @@ export const NavigationRail = () => {
       ))}
       <Spacer />
     </Flex>
-    <Drawer 
-      isOpen={isOpen}
-      onClose={onClose}
-      placement='left'
-      size="menu"
-      colorScheme='gray'
-    >
-      <DrawerOverlay />
-      <DrawerContent w="100px">
-        <DrawerCloseButton />
-        <DrawerHeader >
-          More..
-        </DrawerHeader>
-        <Stack spacing='2' mx={2} align={"start"}>
-          <Button leftIcon={<TbUser />} variant='ghost' width={'full'}>
-            Account
-          </Button>
-          <Button leftIcon={<CgDarkMode />} variant='ghost' width='full' onClick={toggleColorMode}>
-            Color Mode
-          </Button>
-        </Stack>
-      </DrawerContent>
-    </Drawer>
+    {DetailDrawer(isOpen, onClose)}
     </>
   );
 };
+
