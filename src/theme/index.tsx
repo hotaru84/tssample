@@ -29,7 +29,7 @@ export const extendedTheme = extendTheme({
         menu: {
           dialog: { maxWidth: '200px'}
         }
-      }
+      },
     }
   }
 });
