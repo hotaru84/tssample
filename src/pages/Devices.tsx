@@ -1,8 +1,6 @@
-import { Heading, useBoolean, Image, VStack, HStack, Wrap, Stack, IconButton,Text } from "@chakra-ui/react";
+import { Wrap, Container, useDisclosure, Image, Drawer, DrawerCloseButton, DrawerContent, DrawerHeader, Center, Stack } from "@chakra-ui/react";
 import React, {  } from "react";
 import { DeviceCard, DeviceInfo } from "../component/DeviceCard";
-import { motion } from "framer-motion";
-import { MdClose } from "react-icons/md";
 const devices:DeviceInfo[] = [
   {
     name:"test",
@@ -31,31 +29,40 @@ const devices:DeviceInfo[] = [
 ];
 
 export default function Index() {
-  const [open,button] = useBoolean(false);
+  const {isOpen,onOpen,onClose} = useDisclosure();
   return (
-    <Stack direction="row" height={"100vh"} overflowY={"hidden"} >
+    <Container height={"100vh"} maxW={"full"} overflowY={"hidden"} >
       <Wrap 
         justify={"center"}
+        mt={4}
         spacing={4}
         height="100%"
+        width={'full'}
         overflowY={'auto'}
         shouldWrapChildren
       >
         {devices.map((d,index) => (
-          <DeviceCard info={d} key={index} onClick={()=>button.on()}/>
+          <DeviceCard info={d} key={index} onClick={onOpen}/>
         ))}
       </Wrap>
-      <motion.div
-        animate={{width:open?"100%":"0",opacity:open?1:0}}
+      
+     <Drawer
+        isOpen={isOpen}
+        onClose={onClose}
+        placement='right'
+        size={'md'}
+        colorScheme='gray'
       >
-        <VStack>
-          <HStack>
-            <Heading fontWeight={"light"} m={2}>Device</Heading>
-            <IconButton aria-label="close" icon={<MdClose />} variant={"ghost"} onClick={()=>button.off()}>Close</IconButton>
-          </HStack>
-          <Image boxSize={32} />
-        </VStack>
-      </motion.div>
-    </Stack>
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>
+            Device
+          </DrawerHeader>
+          <Center>
+            <Image src='https://via.placeholder.com/200' boxSize={'300px'} objectFit={'contain'}/>
+          </Center>
+        </DrawerContent>
+      </Drawer>
+    </Container>
   );
 }
