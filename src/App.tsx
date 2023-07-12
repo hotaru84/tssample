@@ -8,13 +8,15 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import { AuthUserProvider } from "./provider/AuthUser";
 import { RouteAuthGuard } from "./component/RouteAuthGuard";
+import { RoleType } from "./types";
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <AuthUserProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<RouteAuthGuard component={<Main />} redirect="/login" />}>
+            <Route path="/" element={<RouteAuthGuard component={<Main />} redirect="/login" allowroles={[RoleType.Admin]}/>}>
               <Route path="devices" element={<Devices />} />
               <Route path="settings" element={<Settings />} />
               <Route path="process" element={<Process />} />

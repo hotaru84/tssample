@@ -34,7 +34,7 @@ export default function Index() {
       role: role
     }
     authUser.signin(user, () => { 
-      navigate(fromPathName, { replace: false })
+      navigate(fromPathName, { replace: true })
     });
   }
 
