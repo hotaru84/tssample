@@ -33,18 +33,7 @@ export default function Index() {
   const {isOpen,onOpen,onClose} = useDisclosure();
   return (
     <Container  maxW={"full"} overflowY={"auto"} height={"100vh"}>
-      <Text>Device type</Text>
-      <Wrap 
-        justify={"center"}
-        spacing={4}
-        py={2}
-        shouldWrapChildren
-      >
-        {devices.map((d,index) => (
-          <DeviceCard info={d} key={index} onClick={onOpen}/>
-        ))}
-      </Wrap>
-      <Text>Device type2</Text>
+      <Text >Device type</Text>
       <Wrap 
         justify={"center"}
         spacing={4}

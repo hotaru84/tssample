@@ -31,6 +31,7 @@ const LinkItems: Array<LinkItemProps> = [
 export const NavigationRail = () => {
   const [ fabicon, setFabicon ] = useState<React.ReactElement>((<MdSave/>));
   const { isOpen,onOpen,onClose } = useDisclosure();
+  const [visible, setVisible] = useState<Boolean>();
 
   const pointColor = useColorModeValue('cyan.200', 'cyan.600');
   const bgColor = useColorModeValue('gray.50', 'gray.900');
@@ -41,11 +42,17 @@ export const NavigationRail = () => {
   useEffect(()=>{
     controls.start({scale:[1,0,1],originY:0.25},{duration:0.25,ease:'easeIn'}).then(()=>{
       switch(location.pathname) {
+        case '/':
+          setVisible(false);
+          return ;
         case '/settings':
+          setVisible(true);
           return setFabicon(<MdSave/>);
         case '/devices':
+          setVisible(true);
           return setFabicon(<TbPlus/>);
         case '/process':
+          setVisible(true);
           return setFabicon(<TbEdit/>);
       }
     });
@@ -58,6 +65,7 @@ export const NavigationRail = () => {
       pos="sticky"
       top="0"
       left="0"
+      display={visible?"flex":"none"}
       zIndex={500}
       h="100vh"
       w="100px"
@@ -93,8 +101,8 @@ export const NavigationRail = () => {
         />
       </motion.div>
       {LinkItems.map((link,i) => (
-        <motion.div whileHover={{scale:1.1}}>
-          <NavMenuItem {...link} style={{marginBottom:2}} key={i} />
+        <motion.div whileHover={{scale:1.1}} key={i}>
+          <NavMenuItem {...link} style={{marginBottom:2}} />
         </motion.div>
       ))}
       <Spacer />

@@ -5,21 +5,24 @@ import Process from "./pages/Process";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Devices from "./pages/Devices";
 import Settings from "./pages/Settings";
-
+import Login from "./pages/Login";
+import { AuthUserProvider } from "./provider/AuthUser";
+import { RouteAuthGuard } from "./component/RouteAuthGuard";
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route path="/" element={<Devices />} />
-            <Route path="/devices" element={<Devices />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/process" element={<Process />} />
-            <Route path="*" element={<Devices/>}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthUserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<RouteAuthGuard component={<Main />} redirect="/login" />}>
+              <Route path="devices" element={<Devices />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="process" element={<Process />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthUserProvider>
     </ChakraProvider>
   );
 }
