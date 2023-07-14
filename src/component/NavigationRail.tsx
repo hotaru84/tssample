@@ -42,9 +42,6 @@ export const NavigationRail = () => {
   useEffect(()=>{
     controls.start({scale:[1,0,1],originY:0.25},{duration:0.25,ease:'easeIn'}).then(()=>{
       switch(location.pathname) {
-        case '/':
-          setVisible(false);
-          return ;
         case '/settings':
           setVisible(true);
           return setFabicon(<MdSave/>);

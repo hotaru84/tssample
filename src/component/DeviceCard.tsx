@@ -22,7 +22,7 @@ export const DeviceCard = (props:DeviceCardProps) => {
       _hover={{borderWidth:1.5,borderColor:"gray.400"}}
     >
       <Image src='gibbresh.png' fallbackSrc='https://via.placeholder.com/150' />
-      <StatusIndicator boxSize={3} bgColor="green.300" position="absolute" top={2} right={2} isActive />
+      <StatusIndicator boxSize={3} bgColor="green.300" position="absolute" top={2} right={2} />
 
       <CardBody my={2}>
         <Text as="h3" fontSize="md" noOfLines={1} color="gray.400">

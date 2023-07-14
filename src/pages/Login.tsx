@@ -12,7 +12,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useNavigate, useLocation, redirect } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthUserContextType, useAuthUserContext } from '../provider/AuthUser';
 import { RoleType, UserType } from '../types';
 
@@ -22,19 +22,14 @@ type CustomLocation = {
 
 export default function Index() {
   const navigate = useNavigate();
-  const location:CustomLocation = useLocation() as CustomLocation;
-  //TODO:
-  const fromPathName:string = location.state.from.pathname === "/"?"/devices":location.state.from.pathname;
   const authUser:AuthUserContextType = useAuthUserContext();
-  //TODO:browser back sction should be prohibited
-  
   const signin = (role:RoleType) => {
     const user: UserType = {
       name: "no-name",
       role: role
     }
-    authUser.signin(user, () => { 
-      navigate(fromPathName, { replace: true })
+    authUser.signin(user, () => {
+      navigate("/devices", { replace: true })
     });
   }
 

@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAuthUserContext } from "../provider/AuthUser";
 
 type Props = {
-  component: React.ReactNode;
+  to: string;
   redirect: string,
   allowroles?: RoleType[] 
 }
@@ -23,6 +23,6 @@ export const RouteAuthGuard: React.FC<Props> = (props) => {
     return <Navigate to={props.redirect} state={{from:loc}} replace={false} />
   }
 
-  return <>{props.component}</>;
+  return <Navigate to={props.to} state={{from:loc}} replace={true} />
 
 }
