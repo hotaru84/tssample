@@ -1,17 +1,29 @@
+import { Suspense, useEffect} from 'react';
 import {
-  Flex
+  Center,
+  CircularProgress,
+  Container,
+  Flex,
+  Progress
 } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { NavigationRail } from '../component/NavigationRail';
 
+function loading() {
+  return (
+    <Center width={"100%"}>
+      TODO:loading animation
+    </Center>
+  )
+} 
 
 export default function Index() {
   return (
     <Flex>
       <NavigationRail/>
-      <Flex width={"100%"}>
-        <Outlet/>
-      </Flex>
+      <Suspense fallback={loading()}>
+        <Outlet />
+      </Suspense>
     </Flex>
   );
 }
