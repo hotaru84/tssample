@@ -22,6 +22,7 @@ function App() {
               <Route path="process" element={<Process />} />
             </Route>
             <Route path="/login" element={<Login />} />
+<Route index element={<Navigate to="/devices" replace />} />
           </Routes>
         </BrowserRouter>
       </AuthUserProvider>
